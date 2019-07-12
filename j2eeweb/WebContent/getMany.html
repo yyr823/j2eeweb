@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+<title>用AJAX以JSON方式获取数据</title> 
+<script type="text/javascript" src="jquery.min.js"></script> 
+</head> 
+<body> 
+    <input type="button" value="通过AJAX获取多个Hero对象" id="sender">  
+   
+    <div id="messageDiv"></div> 
+       
+    <script> 
+    $('#sender').click(function(){ 
+        var url="getManyServlet"; 
+        $.post(
+                url,
+                function(data) {
+                	//用于将格式完好的JSON字符串转为与之对应的JavaScript对象。
+                	/*
+                	所谓"格式完好"，就是要求指定的字符串必须符合严格的JSON格式，
+                	例如：属性名称必须加双引号、字符串值也必须用双引号。
+                    如果传入一个格式不"完好"的JSON字符串将抛出一个JS异常，
+                	*/
+                    var heros = $.parseJSON(data);
+                     for(i in heros){
+                         var old = $("#messageDiv").html();
+                         var hero = heros[i];
+                         $("#messageDiv").html(old + "<br>"+hero.name+"   -----   "+hero.hp); 
+                     }
+         });  
+    }); 
+    </script> 
+</body> 
+   
+</body>
+</html>
